@@ -42,3 +42,6 @@ The bot enforces a rate limit of **1 cat per 10 seconds per user** to prevent AP
 - `@nerimity/nerimity.js` - Nerimity bot SDK
 - `axios` - HTTP requests
 - `dotenv` - Environment variable management
+
+## License
+MIT like every project should be
