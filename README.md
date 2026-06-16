@@ -20,12 +20,15 @@ A Nerimity bot that sends random cat images and facts on demand.
 npm install
 ```
 
-2. Create a `.env` file:
-```env
-NERIMITY_TOKEN=your_bot_token_here
+2. Copy .env.example to .env
+```bash
+cp .env.example .env
 ```
-
-3. Run the bot:
+3. Add your bot token to .env
+```env
+NERIMITY_TOKEN=YOURTOKEN
+```
+4. run the bot:
 ```bash
 node index.js
 ```
