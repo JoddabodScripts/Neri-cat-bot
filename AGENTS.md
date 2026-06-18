@@ -1,7 +1,5 @@
 # Cat Bot - AI Agent Reference
 
-*Generated on 2026-06-15 by init skill*
-
 ## Quick Overview
 A Nerimity chat bot that responds to `!cat` or `/cat` commands with random cat facts and images from the CATAAS API. Built with Node.js using the @nerimity/nerimity.js SDK.
 
