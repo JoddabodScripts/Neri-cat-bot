@@ -1,4 +1,4 @@
-# Cat Bot 🐱
+# Cat Bot
 
 A delightful Nerimity bot that brings joy to your server with random cat images and fascinating cat facts on demand.
 
@@ -6,7 +6,7 @@ A delightful Nerimity bot that brings joy to your server with random cat images 
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
 [![Nerimity](https://img.shields.io/badge/Nerimity-Bot-blue)](https://nerimity.com/)
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
@@ -24,11 +24,11 @@ A delightful Nerimity bot that brings joy to your server with random cat images 
 
 - **Random Cat Images** - Fetches adorable cat images from [CATAAS](https://cataas.com)
 - **Cat Facts** - Delivers interesting cat facts from [Cat Fact Ninja](https://catfact.ninja)
-- ️ **Smart Rate Limiting** - Prevents API abuse with 1 cat per 10 seconds per user
+- **Smart Rate Limiting** - Prevents API abuse with 1 cat per 10 seconds per user
 - **Interactive Buttons** - Quick "Another?" button for seamless cat requests
-- ️ **Error Handling** - Robust error management for reliable operation
+- **Error Handling** - Robust error management for reliable operation
 
-## 🔧 Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
@@ -36,33 +36,33 @@ Before you begin, ensure you have the following installed:
 - **npm** (comes with Node.js)
 - A **Nerimity account** and bot token
 
-## 📥 Installation
+## Installation
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/JoddabodScripts/Neri-cat-bot.git
-   cd Neri-cat-bot
-   ```
+ ```bash
+ git clone https://github.com/JoddabodScripts/Neri-cat-bot.git
+ cd Neri-cat-bot
+ ```
 
 2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+ ```bash
+ npm install
+ ```
 
 3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
+ ```bash
+ cp .env.example .env
+ ```
 
 4. **Configure your bot token** (see [Configuration](#configuration) section)
 
-## ⚙️ Configuration
+## Configuration
 
 1. Open the `.env` file in your favorite text editor
 2. Add your Nerimity bot token:
-   ```env
-   NERIMITY_TOKEN=your_bot_token_here
-   ```
+ ```env
+ NERIMITY_TOKEN=your_bot_token_here
+ ```
 
 ### Getting Your Bot Token
 
@@ -72,9 +72,9 @@ Before you begin, ensure you have the following installed:
 4. Copy the bot token
 5. Paste it into your `.env` file
 
-**⚠️ Security Warning**: Never commit your `.env` file or share your bot token publicly!
+** Security Warning**: Never commit your `.env` file or share your bot token publicly!
 
-## 🚀 Usage
+## Usage
 
 ### Starting the Bot
 
@@ -99,13 +99,13 @@ The bot will connect to Nerimity and start listening for commands. You should se
 ```
 User: !cat
 Bot: [Displays a random cat image with a cat fact]
-     [Shows "Another?" button]
+ [Shows "Another?" button]
 
 User: [Clicks "Another?" button]
 Bot: [Displays another random cat image with a new cat fact]
 ```
 
-## 🎮 Commands
+## Commands
 
 | Command | Alias | Description |
 |---------|-------|-------------|
@@ -117,7 +117,7 @@ Bot: [Displays another random cat image with a new cat fact]
 - **Case Sensitive**: Commands are case-sensitive (use lowercase)
 - **Cooldown**: 10 seconds per user between requests
 
-## ⏱️ Rate Limiting
+## ⏱ Rate Limiting
 
 The bot implements user-specific rate limiting to ensure fair usage and prevent API abuse:
 
@@ -126,7 +126,7 @@ The bot implements user-specific rate limiting to ensure fair usage and prevent 
 - **Feedback**: Users who exceed the limit receive a friendly reminder message
 - **Purpose**: Protects external APIs (CATAAS) from excessive requests
 
-## 📦 Dependencies
+## Dependencies
 
 This project uses the following packages:
 
@@ -135,7 +135,7 @@ This project uses the following packages:
 - **[dotenv](https://www.npmjs.com/package/dotenv)** (^16.0.0) - Environment variable management
 - **[form-data](https://www.npmjs.com/package/form-data)** (^4.0.0) - Multipart form data handling
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from the community! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for detailed guidelines on:
 
@@ -145,27 +145,27 @@ We welcome contributions from the community! Please see our [CONTRIBUTING.md](CO
 - Coding standards and style guide
 - Development setup
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 💬 Support
+## Support
 
 If you encounter any issues or have questions:
 
 - **Issues**: Open an issue on [GitHub Issues](https://github.com/JoddabodScripts/Neri-cat-bot/issues)
 - **Discussions**: Join the conversation in [GitHub Discussions](https://github.com/JoddabodScripts/Neri-cat-bot/discussions)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [CATAAS](https://cataas.com) - For providing the cat images API
 - [Cat Fact Ninja](https://catfact.ninja) - For the cat facts API
 - [Nerimity](https://nerimity.com/) - For the excellent bot platform
 
-## 📊 Project Status
+## Project Status
 
 This project is actively maintained. Last updated: June 2026
 
 ---
 
-Made with ❤️ for cat lovers everywhere 🐾
+Made with for cat lovers everywhere 
