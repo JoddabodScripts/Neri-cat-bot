@@ -30,8 +30,39 @@ process.on('unhandledRejection', (err) => {
   console.error('Unhandled rejection:', err.message);
 });
 
+let activityIndex = 0;
+function updatePresence(client) {
+  try {
+    const serverCount = client.servers?.cache?.size ?? 0;
+    const serverLabel = `${serverCount} server${serverCount !== 1 ? "s" : ""}`;
+    const activities = [
+      {
+        action: "Playing",
+        name: "Cat Bot",
+        startedAt: Date.now(),
+        title: serverLabel,
+        subtitle: "Type !cat",
+      },
+      {
+        action: "Watching",
+        name: "Cat Distribution System",
+        startedAt: Date.now(),
+        title: "🐱",
+        subtitle: "meow",
+      },
+    ];
+    const activity = activities[activityIndex % activities.length];
+    activityIndex += 1;
+    client.user?.setActivity(activity);
+  } catch (e) {
+    console.error("[bot] Failed to update presence:", e.message);
+  }
+}
+
 client.on(Events.Ready, () => {
   console.log(`${client.user?.username} Has entered the litterbox!`);
+  updatePresence(client);
+  setInterval(() => updatePresence(client), 15000);
 });
 
 client.on(Events.MessageCreate, async (message) => {
