@@ -1,6 +1,6 @@
-require('dotenv').config();
-const { Client, Events } = require('@nerimity/nerimity.js');
-const axios = require('axios');
+require("dotenv").config();
+const { Client, Events } = require("@nerimity/nerimity.js");
+const axios = require("axios");
 
 const client = new Client();
 
@@ -10,12 +10,12 @@ const userRateLimits = new Map(); // userId -> timestamp of last request
 function checkRateLimit(userId) {
   const now = Date.now();
   const lastRequest = userRateLimits.get(userId);
-  
+
   if (lastRequest && now - lastRequest < 10000) {
     // Still within cooldown period
     return { allowed: false };
   }
-  
+
   // Record timestamp for this request
   userRateLimits.set(userId, now);
   return { allowed: true };
@@ -26,43 +26,23 @@ async function getCatFact() {
   return res.data?.fact || "Cats are cool.";
 }
 
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled rejection:', err.message);
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled rejection:", err.message);
 });
-
-let activityIndex = 0;
-function updatePresence(client) {
-  try {
-    const serverCount = client.servers?.cache?.size ?? 0;
-    const serverLabel = `${serverCount} server${serverCount !== 1 ? "s" : ""}`;
-    const activities = [
-      {
-        action: "Playing",
-        name: "Cat Bot",
-        startedAt: Date.now(),
-        title: serverLabel,
-        subtitle: "Type !cat",
-      },
-      {
-        action: "Watching",
-        name: "Cat Distribution System",
-        startedAt: Date.now(),
-        title: "🐱",
-        subtitle: "meow",
-      },
-    ];
-    const activity = activities[activityIndex % activities.length];
-    activityIndex += 1;
-    client.user?.setActivity(activity);
-  } catch (e) {
-    console.error("[bot] Failed to update presence:", e.message);
-  }
-}
 
 client.on(Events.Ready, () => {
   console.log(`${client.user?.username} Has entered the litterbox!`);
-  updatePresence(client);
-  setInterval(() => updatePresence(client), 15000);
+  try {
+    client.user?.setActivity({
+      action: "Playing",
+      name: "Cat Bot",
+      startedAt: Date.now(),
+      title: "Type !cat",
+      subtitle: "meow",
+    });
+  } catch (e) {
+    console.error("[bot] Failed to set presence:", e.message);
+  }
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -72,13 +52,15 @@ client.on(Events.MessageCreate, async (message) => {
     const content = message.content || "";
     console.log(`[${message.user.username}]: ${content}`);
 
-    if (content.startsWith('!cat') || content.startsWith('/cat')) {
+    if (content.startsWith("!cat") || content.startsWith("/cat")) {
       console.log("Cat command detected!");
 
       // Check rate limit before sending
       const rateCheck = checkRateLimit(message.user.id);
       if (!rateCheck.allowed) {
-        await message.reply("Slow down! You can only request 1 cat per 10 seconds. 🐱");
+        await message.reply(
+          "Slow down! You can only request 1 cat per 10 seconds. 🐱",
+        );
         return;
       }
 
@@ -88,12 +70,12 @@ client.on(Events.MessageCreate, async (message) => {
 
       // Get the JSON with image URL
       const jsonRes = await axios.get("https://cataas.com/cat", {
-        headers: { 'Accept': 'application/json' },
-        timeout: 10000
+        headers: { Accept: "application/json" },
+        timeout: 10000,
       });
 
       if (!jsonRes.data?.url) {
-        throw new Error('CATAAS did not return image URL');
+        throw new Error("CATAAS did not return image URL");
       }
 
       const imageUrl = jsonRes.data.url;
@@ -103,7 +85,7 @@ client.on(Events.MessageCreate, async (message) => {
       const msg = `${fact}\n${imageUrl}`;
       console.log("Sending:", msg);
       await message.reply(msg, {
-        buttons: [{ id: "another", label: "Another?" }]
+        buttons: [{ id: "another", label: "Another?" }],
       });
       console.log("Sent!");
     }
@@ -122,21 +104,21 @@ client.on(Events.MessageButtonClick, async (button) => {
     const rateCheck = checkRateLimit(button.user.id);
     if (!rateCheck.allowed) {
       await button.respond({
-        content: "Slow down! You can only request 1 cat per 10 seconds. 🐱"
+        content: "Slow down! You can only request 1 cat per 10 seconds. 🐱",
       });
       return;
     }
 
     // Fetch new cat fact and image
     const fact = await getCatFact();
-    
+
     const jsonRes = await axios.get("https://cataas.com/cat", {
-      headers: { 'Accept': 'application/json' },
-      timeout: 10000
+      headers: { Accept: "application/json" },
+      timeout: 10000,
     });
 
     if (!jsonRes.data?.url) {
-      throw new Error('CATAAS did not return image URL');
+      throw new Error("CATAAS did not return image URL");
     }
 
     const imageUrl = jsonRes.data.url;
@@ -144,13 +126,15 @@ client.on(Events.MessageButtonClick, async (button) => {
 
     // Send as a new message in the channel
     await button.channel.send(msg, {
-      buttons: [{ id: "another", label: "Another?" }]
+      buttons: [{ id: "another", label: "Another?" }],
     });
 
     console.log("Sent another cat!");
   } catch (err) {
     console.error("Error in button handler:", err.message);
-    await button.respond({ content: "Oops! Something went wrong fetching a cat. 😿" });
+    await button.respond({
+      content: "Oops! Something went wrong fetching a cat. 😿",
+    });
   }
 });
 
