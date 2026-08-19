@@ -1,15 +1,15 @@
-# Cat Bot - AI Agent Reference
+# Cat Bot - AI agent reference
 
-## Quick Overview
-A Nerimity chat bot that responds to `!cat` or `/cat` commands with random cat facts and images from the CATAAS API. Built with Node.js using the @nerimity/nerimity.js SDK.
+## Overview
+A Nerimity chat bot that responds to `!cat` or `/cat` with a random cat fact and image from the CATAAS API. Built with Node.js using the @nerimity/nerimity.js SDK.
 
-## Project Type & Stack
-- **Language:** JavaScript (Node.js)
-- **Framework:** @nerimity/nerimity.js (Nerimity bot SDK)
-- **Package Manager:** npm
-- **Runtime:** Node.js (no build step required)
+## Project type and stack
+- Language: JavaScript (Node.js)
+- Framework: @nerimity/nerimity.js (Nerimity bot SDK)
+- Package manager: npm
+- Runtime: Node.js, no build step
 
-## Directory Structure
+## Directory structure
 ```
 .
 ├── index.js              # Main bot entry point
@@ -19,32 +19,32 @@ A Nerimity chat bot that responds to `!cat` or `/cat` commands with random cat f
 ├── .env                  # Bot token (DO NOT COMMIT)
 ├── .env.example          # Template for .env
 ├── bot.log               # Runtime logs
-└── cats/                 # Directory with sample cat images
+└── cats/                 # Sample cat images
     ├── cat surprised.webp
     └── funny cat.webp
 ```
 
-## Entry Points
-- **Main:** `index.js` - Bot initialization and message handler
+## Entry points
+- `index.js` - bot initialization and message handler
 
-## Key Files & Directories
-- `index.js` - Current bot implementation using CATAAS API for facts and images
-- `index.js.bak` - Previous version with hardcoded cat facts array (50+ facts) and local image support
-- `package.json` - npm configuration with start scripts
-- `.env` - Contains `NERIMITY_TOKEN` for bot authentication (gitignored)
-- `.env.example` - Template showing required environment variables
-- `cats/` - Sample cat images in webp format (not currently used by active bot)
+## Key files
+- `index.js` - current bot implementation, uses CATAAS for facts and images
+- `index.js.bak` - previous version with a hardcoded cat facts array (50+ facts) and local image support
+- `package.json` - npm configuration and start scripts
+- `.env` - contains `NERIMITY_TOKEN` for bot authentication, gitignored
+- `.env.example` - template showing required environment variables
+- `cats/` - sample cat images in webp format, not used by the active bot
 
 ## Architecture
-Simple event-driven chatbot with a single-file architecture:
-1. Bot authenticates with Nerimity token
+Single-file, event-driven:
+1. Bot authenticates with the Nerimity token
 2. Listens for `MessageCreate` events
-3. Detects `!cat` or `/cat` commands
-4. Fetches cat fact from catfact.ninja API
-5. Fetches cat image URL from CATAAS API (JSON endpoint)
-6. Replies with fact + image URL
+3. Detects `!cat` or `/cat`
+4. Fetches a cat fact from catfact.ninja
+5. Fetches a cat image URL from CATAAS (JSON endpoint)
+6. Replies with the fact and image URL
 
-### Bot Flow
+### Bot flow
 ```
 User sends !cat/cat
   → Event: MessageCreate
@@ -53,98 +53,96 @@ User sends !cat/cat
     → message.reply(fact + imageUrl)
 ```
 
-### API Integration
-- **Cat Facts:** `https://catfact.ninja/fact` (GET, returns `{fact: string}`)
-- **Cat Images:** `https://cataas.com/cat` with `Accept: application/json` header (returns `{url: string}`)
+### API integration
+- Cat facts: `https://catfact.ninja/fact` (GET, returns `{fact: string}`)
+- Cat images: `https://cataas.com/cat` with `Accept: application/json` header (returns `{url: string}`)
 
 ## Dependencies
 
 ### Production
-- `@nerimity/nerimity.js` ^1.0.0 - Nerimity platform SDK for bot client
-- `dotenv` ^16.0.0 - Environment variable loader
+- `@nerimity/nerimity.js` ^1.0.0 - Nerimity platform SDK for the bot client
+- `dotenv` ^16.0.0 - environment variable loader
 - `axios` ^1.6.0 - HTTP client for API requests
-- `form-data` ^4.0.0 - Multipart form data (unused in current version)
+- `form-data` ^4.0.0 - multipart form data, unused in the current version
 
 ### Development
-None - simple runtime project with no build step
+None. Simple runtime project, no build step.
 
-## Code Conventions
-- **Naming:** camelCase for functions and variables
-- **Style:** 2-space indentation, no semicolons on some lines
-- **Imports:** CommonJS (`require`)
-- **Error Handling:** try/catch in message handler, unhandledRejection process listener
-- **Logging:** console.log for debugging, console.error for errors
+## Code conventions
+- Naming: camelCase for functions and variables
+- Style: 2-space indentation, no semicolons on some lines
+- Imports: CommonJS (`require`)
+- Error handling: try/catch in the message handler, plus an `unhandledRejection` process listener
+- Logging: `console.log` for debugging, `console.error` for errors
 
-## Environment Configuration
-Required environment variables in `.env`:
+## Environment configuration
+Required in `.env`:
 ```
 NERIMITY_TOKEN=your_bot_token_here
 ```
 
 ## Testing
-- **Framework:** None configured
-- **Location:** No tests present
-- **Run Command:** N/A
+None configured. No tests present.
 
-## Build & Deploy
-- **Build Command:** N/A (no build step)
-- **Start Command:** `npm start` or `node index.js`
-- **Dev Command:** `npm run dev` (runs `bash start.sh` - script not present in repo)
-- **Deploy:** Not documented
+## Build and deploy
+- Build: N/A, no build step
+- Start: `npm start` or `node index.js`
+- Dev: `npm run dev` (runs `bash start.sh`, but that script isn't in the repo)
+- Deploy: not documented
 
-## Common Tasks
+## Common tasks
 - Run bot: `npm start` or `node index.js`
 - Install dependencies: `npm install`
-- Set up environment: Copy `.env.example` to `.env` and add bot token
+- Set up environment: copy `.env.example` to `.env` and add the bot token
 
-## Important Notes
+## Notes
 
-### Bot Behavior
+### Bot behavior
 - Ignores its own messages (checks `message.user.id === client.user.id`)
-- Commands are case-sensitive: `!cat` or `/cat` (lowercase)
+- Commands are case-sensitive: `!cat` or `/cat`, lowercase only
 - 10-second timeout on API requests
 - Replies directly to the triggering message
 
-### Error Handling
-- Catches errors in message handler to prevent crashes
-- Global unhandledRejection handler for promise errors
-- API failures are logged but don't crash the bot
+### Error handling
+- Message handler errors are caught so they don't crash the bot
+- Global `unhandledRejection` handler catches promise errors
+- API failures are logged, not fatal
 
-### Backup Version (index.js.bak)
-Contains 50+ hardcoded cat facts and local image directory support. Differs from current version:
-- Uses local `catFacts` array instead of catfact.ninja API
-- Has `randomCat()` function for local image selection (incomplete, references missing `fs` and `path`)
-- Has `randomFact()` function for local fact selection
-- Otherwise identical event handling
+### Backup version (index.js.bak)
+Has 50+ hardcoded cat facts and local image directory support. Differs from the current version:
+- Uses a local `catFacts` array instead of the catfact.ninja API
+- Has a `randomCat()` function for local image selection, incomplete, references missing `fs` and `path`
+- Has a `randomFact()` function for local fact selection
+- Otherwise the same event handling
 
-## Areas of Interest
+## Areas of interest
 
-### API Reliability
-Both external APIs (catfact.ninja and cataas.com) have 10s timeouts. Consider:
-- Fallback to local facts if API fails
+### API reliability
+Both external APIs (catfact.ninja and cataas.com) have 10s timeouts. Worth considering:
+- Fallback to local facts if the API fails
 - Retry logic for failed requests
 - Caching cat facts for offline operation
 
-### Missing Features
+### Missing features
 - No command help text
 - No admin commands
 - No per-server configuration
 - No rate limiting on commands
-- start.sh script referenced but not present
+- `start.sh` is referenced by `npm run dev` but not present in the repo
 
-### Code Quality
-- No input validation beyond command prefix check
+### Code quality
+- No input validation beyond the command prefix check
 - No TypeScript types
 - No linting configuration
 - No tests
 - Magic strings for command prefixes (`!cat`, `/cat`)
 
-### Potential Improvements
-1. Combine current version with backup's local facts as fallback
+### Potential improvements
+1. Combine the current version with the backup's local facts as a fallback
 2. Add command aliases and help text
 3. Add rate limiting to prevent spam
-4. Implement proper logging (not just console)
+4. Replace console logging with a real logger
 5. Add TypeScript for type safety
-6. Create tests for command parsing and API interactions
-7. Document the start.sh script or remove reference
-8. Use local cats/ directory images as fallback when API fails
+6. Add tests for command parsing and API interactions
+7. Document `start.sh` or remove the reference
+8. Use the `cats/` directory images as a fallback when the API fails
